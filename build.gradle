@@ -1,0 +1,44 @@
+plugins {
+	id "org.springframework.boot" version "2.7.0"
+	id "io.spring.dependency-management" version "1.0.12.RELEASE"
+	id "java"
+}
+
+group = "com.mherasiutsin"
+version = "0.0.1-SNAPSHOT"
+sourceCompatibility = "18"
+
+repositories {
+	mavenCentral()
+	maven { url "https://repo.spring.io/milestone" }
+	maven { url "https://repo.spring.io/snapshot" }
+}
+
+ext {
+	set("testcontainersVersion", "1.17.3")
+	set("swagger2Version", "2.6.1")
+}
+
+dependencies {
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+	implementation "org.springframework.boot:spring-boot-starter-web"
+	implementation "mysql:mysql-connector-java"
+	implementation "org.projectlombok:lombok"
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+	annotationProcessor "org.projectlombok:lombok"
+
+	testImplementation "mysql:mysql-connector-java"
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
+	testImplementation "org.testcontainers:mysql"
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.testcontainers:testcontainers-bom:${testcontainersVersion}"
+	}
+}
+
+test {
+	useJUnit()
+}
